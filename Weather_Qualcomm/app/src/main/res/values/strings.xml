@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Weather_Qualcomm</string>
     <string name="action_settings">Settings</string>
+    <string name="helloworld">Hello World!</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
 </resources>
