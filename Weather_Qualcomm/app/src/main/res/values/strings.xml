@@ -7,4 +7,6 @@
     <string name="wednesday">Wednesday</string>
     <string name="thursday">Thursday</string>
     <string name="friday">Friday</string>
+    <string name="weather_title">Weather - Qualcomm</string>
+    <string name="ambient_temperature">Ambient Temperature</string>
 </resources>
