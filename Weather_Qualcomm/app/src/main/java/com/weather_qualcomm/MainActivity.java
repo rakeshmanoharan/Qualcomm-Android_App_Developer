@@ -17,19 +17,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static String TAG = "MainActivity";
     //endregion
 
+    static {
+        System.loadLibrary("myCelciusToFarenheit");
+    }
+
     //region Variables
     private Random randomGenerator;
     private SensorManager mSensorManager;
     private Sensor mAmbientTemperatureSensor;
     private boolean sensorExists = true;
-    private TextView temperature_air;
+    //private String celciusList="";
     //endregion
+    private TextView temperature_air;
+    private String celciusList = "10,-2,0,28,87";
 
-    static {
-        System.loadLibrary("myCelciusToFarenheit");
-    }
-
-//    public native String convertTemperature();
+    public native String convertTemperature(String celciusList);
 
     //region activity lifecycle's
     @Override
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         if (mAmbientTemperatureSensor == null) {
             sensorExists = false;
-            Log.d(TAG,"Sensor doesn't exist in this phone");
+            Log.d(TAG, "Sensor doesn't exist in this phone");
             temperature_air.setText("Sensor doesn't exist");
         }
 
@@ -72,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         friday.setText(generateRandom());
 
         Log.d(TAG, "Random numbers generated");
+//        String celciusListToConvert=celciusList.substring(0,celciusList.lastIndexOf(",")-1);
+        //  Log.d(TAG,celciusListToConvert);
+        Log.d(TAG, convertTemperature(celciusList));
     }
 
     // Sensor should register on create and also on resume of the activity
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onResume();
         if (sensorExists) {
             mSensorManager.registerListener(this, mAmbientTemperatureSensor, SensorManager.SENSOR_DELAY_NORMAL);
-            Log.d(TAG,"Register Ambient Temperature Sensor");
+            Log.d(TAG, "Register Ambient Temperature Sensor");
         }
     }
 
@@ -113,7 +118,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String generateRandom() {
         // Random Generator generates the value from 0 to 36
         // The range of celcius values possible is from -6 to 30
-        return String.valueOf(randomGenerator.nextInt(36) - 6);
+        String generatedNumber = String.valueOf(randomGenerator.nextInt(36) - 6);
+        // Each random celcius is stored in String for later use
+        //celciusList.concat(generatedNumber).concat(",");
+        return generatedNumber;
     }
 
     private void updateTemperatureUI(float temperature) {
