@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
     //region static variables
     private static String TAG = "MainActivity";
 
@@ -28,9 +30,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean sensorExists;
     private TextView temperature_air;
     private String mCelciusStr;
-    private String mFarenheit;
+    private String mFahrenheit;
+    private Button convertButton;
+    private Boolean mViewCelcius;
+    private TextView monday;
+    private TextView tuesday;
+    private TextView wednesday;
+    private TextView thursday;
+    private TextView friday;
     //endregion
-
 
 
     public native String convertTemperature(String celciusList);
@@ -60,22 +68,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         randomGenerator = new Random();
         Log.d(TAG, "Generating Random numbers");
         //Generate temparature in celcius as random numbers
-        TextView monday = (TextView) findViewById(R.id.tmon);
+        monday = (TextView) findViewById(R.id.tmon);
         monday.setText(generateRandom());
-        TextView tuesday = (TextView) findViewById(R.id.ttue);
+        tuesday = (TextView) findViewById(R.id.ttue);
         tuesday.setText(generateRandom());
-        TextView wednesday = (TextView) findViewById(R.id.twed);
+        wednesday = (TextView) findViewById(R.id.twed);
         wednesday.setText(generateRandom());
-        TextView thursday = (TextView) findViewById(R.id.tthu);
+        thursday = (TextView) findViewById(R.id.tthu);
         thursday.setText(generateRandom());
-        TextView friday = (TextView) findViewById(R.id.tfri);
+        friday = (TextView) findViewById(R.id.tfri);
         friday.setText(generateRandom());
         Log.d(TAG, "Random numbers generated");
 
-//        Using native C++ code to convert all the celsius values to Farenheit
-        mFarenheit=convertTemperature(mCelciusStr.trim());
-        mFarenheit=mFarenheit.substring(0,mFarenheit.lastIndexOf(",")); // Just to cut off the last delimitter
-        Log.d(TAG,"Converted to Farenheit: "+ mFarenheit);
+//        Using native C++ code to convert all the celsius values to Fahrenheit
+        mFahrenheit = convertTemperature(mCelciusStr.trim());
+        mFahrenheit = mFahrenheit.substring(0, mFahrenheit.lastIndexOf(",")); // Just to cut off the last delimitter
+        Log.d(TAG, "Converted to Fahrenheit: " + mFahrenheit);
+        mViewCelcius = true;
+
+        convertButton = (Button) findViewById(R.id.convert);
+        convertButton.setOnClickListener(this);
     }
 
     // Sensor should register on create and also on resume of the activity
@@ -119,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // The range of celcius values possible is from -6 to 30
         String generatedNumber = String.valueOf(randomGenerator.nextInt(36) - 6);
         // Each random celcius is stored in String for later use
-        if (mCelciusStr ==null)
-            mCelciusStr =generatedNumber;
+        if (mCelciusStr == null)
+            mCelciusStr = generatedNumber;
         else
             mCelciusStr = mCelciusStr.concat(",").concat(generatedNumber);
         Log.d(TAG, "generatedNumber:  " + mCelciusStr);
@@ -130,6 +142,28 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private void updateTemperatureUI(float temperature) {
         temperature_air.setText(String.valueOf(temperature_air));
         Log.d(TAG, "Ambient Temperature updated on UI");
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mViewCelcius) {
+            updateUIwithValues(mFahrenheit);
+            convertButton.setText("To Celcius");
+            mViewCelcius = false;
+        } else {
+            updateUIwithValues(mCelciusStr);
+            convertButton.setText("To Fahrenheit");
+            mViewCelcius = true;
+        }
+    }
+
+    private void updateUIwithValues(String mValues) {
+        String[] values = mValues.split(",");
+        monday.setText(values[0]);
+        tuesday.setText(values[1]);
+        wednesday.setText(values[2]);
+        thursday.setText(values[3]);
+        friday.setText(values[4]);
     }
     //endregion
 

@@ -29,6 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginBottom="@dimen/margin_bottom"
         android:orientation="horizontal"
         android:weightSum="10">
@@ -36,16 +37,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="8"
+            android:layout_weight="6"
             android:text="@string/ambient_temperature"
-            />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2" />
+            android:layout_weight="4"
+            android:textAlignment="center" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -147,6 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_bottom"
         android:orientation="horizontal"
         android:weightSum="8">
 
@@ -167,5 +171,11 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/converttof"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
