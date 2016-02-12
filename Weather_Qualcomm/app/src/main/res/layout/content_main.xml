@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgnew"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -23,8 +24,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/margin_bottom"
+        android:layout_marginTop="@dimen/margin_top"
         android:text="@string/weather_title"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/header"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,14 +44,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:text="@string/ambient_temperature"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/header"
+            android:textSize="@dimen/temperature_header"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/temperature" />
     </LinearLayout>
 
 
@@ -62,15 +72,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:paddingStart="@dimen/padding_start"
             android:text="@string/monday"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textColor="@color/header"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tmon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textAlignment="center" />
+            android:paddingEnd="@dimen/padding_degree"
+            android:textAlignment="textEnd"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -86,15 +104,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:paddingStart="@dimen/padding_start"
             android:text="@string/tuesday"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textColor="@color/header"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ttue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textAlignment="center" />
+            android:paddingEnd="@dimen/padding_degree"
+            android:textAlignment="textEnd"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -110,15 +136,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:paddingStart="@dimen/padding_start"
             android:text="@string/wednesday"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textColor="@color/header"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/twed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textAlignment="center" />
+            android:paddingEnd="@dimen/padding_degree"
+            android:textAlignment="textEnd"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -134,15 +168,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:paddingStart="@dimen/padding_start"
             android:text="@string/thursday"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textColor="@color/header"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tthu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textAlignment="center" />
+            android:paddingEnd="@dimen/padding_degree"
+            android:textAlignment="textEnd"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -159,15 +201,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="5"
+            android:paddingStart="@dimen/padding_start"
             android:text="@string/friday"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textColor="@color/header"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tfri"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textAlignment="center" />
+            android:paddingEnd="@dimen/padding_degree"
+            android:textAlignment="textEnd"
+            android:textColor="@color/degree"
+            android:textSize="@dimen/day"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -175,7 +225,11 @@
         android:id="@+id/convert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/header"
+        android:paddingLeft="@dimen/paddingleft"
+        android:paddingRight="@dimen/padding_right"
         android:text="@string/converttof"
-        android:layout_gravity="center"/>
+        android:textColor="@color/buttoncolor" />
 
 </LinearLayout>

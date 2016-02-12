@@ -15,14 +15,17 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, View.OnClickListener {
-    //region static variables
+    //region static/final variables
     private static String TAG = "MainActivity";
 
     static {
         System.loadLibrary("myCelciusToFarenheit");
     }
 
+    final String DEGREE = "\u00b0";
+    final String DEGREE_CELCIUS = " ".concat(DEGREE).concat("C");
     //endregion
+    final String DEGREE_FAHRENHEIT = " ".concat(DEGREE).concat("F");
     //region Variables
     private Random randomGenerator;
     private SensorManager mSensorManager;
@@ -40,10 +43,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView friday;
     //endregion
 
-
+    //Native function to be called to convert the temperature from celcius to fahrenheit
     public native String convertTemperature(String celciusList);
 
-    //region activity lifecycle's
+    //region activity lifecycle's functions
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate..");
@@ -61,7 +64,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (mAmbientTemperatureSensor == null) {
             sensorExists = false;
             Log.d(TAG, "Sensor doesn't exist in this phone");
+
             temperature_air.setText("Sensor doesn't exist");
+            // getColor(int id ) method is deprecated in API 23 but our app needs to support API 21 as well
+            temperature_air.setTextColor(getResources().getColor(R.color.red));
+
         }
 
         //Random object is created to generate random numbers for all the 5 days
@@ -69,15 +76,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d(TAG, "Generating Random numbers");
         //Generate temparature in celcius as random numbers
         monday = (TextView) findViewById(R.id.tmon);
-        monday.setText(generateRandom());
+        monday.setText(generateRandom().concat(DEGREE_CELCIUS));
         tuesday = (TextView) findViewById(R.id.ttue);
-        tuesday.setText(generateRandom());
+        tuesday.setText(generateRandom().concat(DEGREE_CELCIUS));
         wednesday = (TextView) findViewById(R.id.twed);
-        wednesday.setText(generateRandom());
+        wednesday.setText(generateRandom().concat(DEGREE_CELCIUS));
         thursday = (TextView) findViewById(R.id.tthu);
-        thursday.setText(generateRandom());
+        thursday.setText(generateRandom().concat(DEGREE_CELCIUS));
         friday = (TextView) findViewById(R.id.tfri);
-        friday.setText(generateRandom());
+        friday.setText(generateRandom().concat(DEGREE_CELCIUS));
         Log.d(TAG, "Random numbers generated");
 
 //        Using native C++ code to convert all the celsius values to Fahrenheit
@@ -86,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d(TAG, "Converted to Fahrenheit: " + mFahrenheit);
         mViewCelcius = true;
 
+        //Button to show the temperature in either celcius or fahrenheit on UI
         convertButton = (Button) findViewById(R.id.convert);
         convertButton.setOnClickListener(this);
     }
@@ -123,6 +131,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
+    @Override
+    public void onClick(View v) {
+        if (mViewCelcius) {
+            updateUIwithValues(mFahrenheit, DEGREE_FAHRENHEIT);
+            convertButton.setText("To Celcius");
+            mViewCelcius = false;
+        } else {
+            updateUIwithValues(mCelciusStr, DEGREE_CELCIUS);
+            convertButton.setText("To Fahrenheit");
+            mViewCelcius = true;
+        }
+    }
+
     //endregion
 
     //region user defined functions
@@ -144,26 +166,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d(TAG, "Ambient Temperature updated on UI");
     }
 
-    @Override
-    public void onClick(View v) {
-        if (mViewCelcius) {
-            updateUIwithValues(mFahrenheit);
-            convertButton.setText("To Celcius");
-            mViewCelcius = false;
-        } else {
-            updateUIwithValues(mCelciusStr);
-            convertButton.setText("To Fahrenheit");
-            mViewCelcius = true;
-        }
-    }
 
-    private void updateUIwithValues(String mValues) {
+    private void updateUIwithValues(String mValues, String degree) {
         String[] values = mValues.split(",");
-        monday.setText(values[0]);
-        tuesday.setText(values[1]);
-        wednesday.setText(values[2]);
-        thursday.setText(values[3]);
-        friday.setText(values[4]);
+        monday.setText(values[0].concat(degree));
+        tuesday.setText(values[1].concat(degree));
+        wednesday.setText(values[2].concat(degree));
+        thursday.setText(values[3].concat(degree));
+        friday.setText(values[4].concat(degree));
     }
     //endregion
 

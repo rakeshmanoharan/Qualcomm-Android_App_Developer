@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="header">#090B82</color>
+    <color name="values">#2427C7</color>
+    <color name="degree">#08734C</color>
+    <color name="red">#F21313</color>
+    <color name="buttoncolor">#99CAE8</color>
 </resources>

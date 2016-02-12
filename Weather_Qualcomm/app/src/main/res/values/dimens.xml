@@ -5,4 +5,12 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="header_margin_bottom">50dp</dimen>
     <dimen name="margin_bottom">50dp</dimen>
+    <dimen name="padding_degree">30dp</dimen>
+    <dimen name="margin_top">50dp</dimen>
+    <dimen name="temperature_header">18sp</dimen>
+    <dimen name="temperature">15sp</dimen>
+    <dimen name="paddingleft">10dp</dimen>
+    <dimen name="padding_right">10dp</dimen>
+    <dimen name="padding_start">30dp</dimen>
+    <dimen name="day">18sp</dimen>
 </resources>
