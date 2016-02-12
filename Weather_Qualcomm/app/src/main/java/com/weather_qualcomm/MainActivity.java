@@ -15,21 +15,23 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     //region static variables
     private static String TAG = "MainActivity";
-    //endregion
 
     static {
         System.loadLibrary("myCelciusToFarenheit");
     }
 
+    //endregion
     //region Variables
     private Random randomGenerator;
     private SensorManager mSensorManager;
     private Sensor mAmbientTemperatureSensor;
-    private boolean sensorExists = true;
-    //private String celciusList="";
-    //endregion
+    private boolean sensorExists;
     private TextView temperature_air;
-    private String celciusList = "10,-2,0,28,87";
+    private String mCelciusStr;
+    private String mFarenheit;
+    //endregion
+
+
 
     public native String convertTemperature(String celciusList);
 
@@ -41,9 +43,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
 
         // Code to work with sensors
+        sensorExists = true;
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         temperature_air = (TextView) findViewById(R.id.temperature);
-        // Sensors introduced on Ice Cream Sandwitch level but our minimum SDK support is API 21
+        // Sensors introduced on Ice Cream Sandwitch level i.e., API 14 but our minimum SDK support is API 21
         if (Build.VERSION.SDK_INT >= 21) {
             mAmbientTemperatureSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
         }
@@ -55,28 +58,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //Random object is created to generate random numbers for all the 5 days
         randomGenerator = new Random();
-
         Log.d(TAG, "Generating Random numbers");
         //Generate temparature in celcius as random numbers
         TextView monday = (TextView) findViewById(R.id.tmon);
         monday.setText(generateRandom());
-
         TextView tuesday = (TextView) findViewById(R.id.ttue);
         tuesday.setText(generateRandom());
-
         TextView wednesday = (TextView) findViewById(R.id.twed);
         wednesday.setText(generateRandom());
-
         TextView thursday = (TextView) findViewById(R.id.tthu);
         thursday.setText(generateRandom());
-
         TextView friday = (TextView) findViewById(R.id.tfri);
         friday.setText(generateRandom());
-
         Log.d(TAG, "Random numbers generated");
-//        String celciusListToConvert=celciusList.substring(0,celciusList.lastIndexOf(",")-1);
-        //  Log.d(TAG,celciusListToConvert);
-        Log.d(TAG, convertTemperature(celciusList));
+
+//        Using native C++ code to convert all the celsius values to Farenheit
+        mFarenheit=convertTemperature(mCelciusStr.trim());
+        mFarenheit=mFarenheit.substring(0,mFarenheit.lastIndexOf(",")); // Just to cut off the last delimitter
+        Log.d(TAG,"Converted to Farenheit: "+ mFarenheit);
     }
 
     // Sensor should register on create and also on resume of the activity
@@ -115,12 +114,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //endregion
 
     //region user defined functions
-    private String generateRandom() {
+    public String generateRandom() {
         // Random Generator generates the value from 0 to 36
         // The range of celcius values possible is from -6 to 30
         String generatedNumber = String.valueOf(randomGenerator.nextInt(36) - 6);
         // Each random celcius is stored in String for later use
-        //celciusList.concat(generatedNumber).concat(",");
+        if (mCelciusStr ==null)
+            mCelciusStr =generatedNumber;
+        else
+            mCelciusStr = mCelciusStr.concat(",").concat(generatedNumber);
+        Log.d(TAG, "generatedNumber:  " + mCelciusStr);
         return generatedNumber;
     }
 
